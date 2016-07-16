@@ -7,6 +7,7 @@ public class Division : MathOperator {
 	{
 		this.a = a;
 		this.b = b;
+		result = a/b;
 	}
 
 	public override string GetTemplate()

@@ -40,10 +40,13 @@ public class PuzzleModel : GameElement
 				GenerateAddition(_countPuzzleElements, max);
 				break;
 				case Mode.Deduction:
+				GenerateDeduction(_countPuzzleElements, max);
 				break;
 				case Mode.Multiplication:
+				GenerateMultiplication(_countPuzzleElements, max);
 				break;
 				case Mode.Division:
+				GenerateDivision(_countPuzzleElements, max);
 				break;
 
 			default:
@@ -54,6 +57,7 @@ public class PuzzleModel : GameElement
 	private void GenerateAddition(int count, int max)
 	{
 		_puzzleElements.Clear();
+
 		Random rnd = new Random();
 
 		for (int i = 0; i < count; i++)
@@ -61,6 +65,64 @@ public class PuzzleModel : GameElement
 			var a = rnd.Next(max);
 			var b = rnd.Next(max);
 			var test = new Addition(a,b);
+			_puzzleElements.Add(test);
+		}
+
+		OnGeneratePuzzleElements();
+	}
+
+	private void GenerateDeduction(int count, int max)
+	{
+		_puzzleElements.Clear();
+
+		Random rnd = new Random();
+
+		for (int i = 0; i < count; i++)
+		{
+			var a = rnd.Next(max);
+			var b = rnd.Next(max);
+			var test = new Deduction(a, b);
+			_puzzleElements.Add(test);
+		}
+
+		OnGeneratePuzzleElements();
+	}
+
+	private void GenerateMultiplication(int count, int max)
+	{
+		_puzzleElements.Clear();
+
+		Random rnd = new Random();
+
+		for (int i = 0; i < count; i++)
+		{
+			var a = rnd.Next(max);
+			var b = rnd.Next(max);
+			var test = new Multiplication(a, b);
+			_puzzleElements.Add(test);
+		}
+
+		OnGeneratePuzzleElements();
+	}
+
+	private void GenerateDivision(int count, int max)
+	{
+		_puzzleElements.Clear();
+
+		Random rnd = new Random();
+
+		for (int i = 0; i < count; i++)
+		{
+			var a = rnd.Next(max);
+			var b = rnd.Next(max);
+			if (b == 0 || a < b || a % b != 0)
+			{
+				i--;
+				continue;
+			}
+
+			var test = new Division(a, b);
+
 			_puzzleElements.Add(test);
 		}
 
