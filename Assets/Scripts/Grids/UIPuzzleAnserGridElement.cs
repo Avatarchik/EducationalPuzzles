@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public class UIPuzzleAnserGridElement : UGUIAbstractGridElement<UIPuzzleGridViewModel>
 {
 
-	public Text Anser;
+	public Text Temp;
 
 	public override void Initialize(UIPuzzleGridViewModel data)
 	{
-		Anser.text = data.MathOperator.Result.ToString();
+		Temp.text = data.MathOperator.GetTemplate();
 	}
 
 	public override void UpdateElementView()

@@ -15,7 +15,21 @@ public class PuzzleModel : GameElement
 	public List<MathOperator> GetPuzzleElements()
 	{
 		return _puzzleElements;
-	} 
+	}
+
+	public MathOperator GetRandElement()
+	{
+		if (_puzzleElements.Count == 0) return null;
+
+		Random rnd = new Random();
+		int index = rnd.Next(_puzzleElements.Count - 1);
+		return _puzzleElements[index];
+	}
+
+	public void DeleteElement(MathOperator mathOperator)
+	{
+		_puzzleElements.Remove(mathOperator);
+	}
 
 	public void GenerateInts(Mode mode, int max)
 	{
