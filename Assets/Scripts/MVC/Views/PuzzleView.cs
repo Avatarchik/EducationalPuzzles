@@ -15,9 +15,15 @@ public class PuzzleView : GameElement
 
 	void Start () 
 	{
-		GeneratePuzzle.onClick.AddListener(Generate);
+		GeneratePuzzle.onClick.AddListener(Initialize);
 		app.Model.PuzzleModel.OnGeneratePuzzleElements += OnGenerate;
 		PuzzleGrid.OnSelectElement += OnSelectElement;
+		Initialize();
+	}
+
+	public void Initialize()
+	{
+		app.Controller.PuzzleController.GenerateInts();
 	}
 
 	private void OnSelectElement(UGUIAbstractGridElement<UIPuzzleGridViewModel> element)
@@ -47,6 +53,7 @@ public class PuzzleView : GameElement
 	{
 		var cuurElement = obj.GetComponent<UIPuzzleGridElement>();
 		var currTemp = UIDrag.ItemBeingDragged.GetComponent<UIPuzzleAnserGridElement>();
+		if (cuurElement == null || currTemp == null) return;
 
 		if (!cuurElement.GetData().MathOperator.Result.ToString().Equals(currTemp.GetData().MathOperator.Result.ToString()))
 			return;
@@ -61,10 +68,5 @@ public class PuzzleView : GameElement
 		};
 
 		PuzzleAnserGrid.Initialize(viewModelAnser);
-	}
-
-	private void Generate()
-	{
-		app.Model.PuzzleModel.GenerateInts(app.Model.UserModel.GetMode(), Max);
 	}
 }
