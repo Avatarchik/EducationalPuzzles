@@ -25,6 +25,7 @@ public class PuzzleView : GameElement
 		ButtonHint.onClick.AddListener(ConfirmAdvertising);
 		app.Model.PuzzleModel.OnGeneratePuzzleElements += OnGenerateElements;
 		PuzzleGrid.OnSelectElement += OnSelectElement;
+		PuzzleGrid.SetCellSize(app.Model.PuzzleModel.CountPuzzleElements); ///////передавать делимое
 		Initialize();
 	}
 

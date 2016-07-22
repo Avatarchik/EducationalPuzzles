@@ -8,9 +8,16 @@ public class PuzzleModel : GameElement
 {
 
 	private List<MathOperator> _puzzleElements = new List<MathOperator>();
-	private int _countPuzzleElements = 9;
+	private int _countPuzzleElements;
 
 	public Action OnGeneratePuzzleElements = delegate { };
+
+	public int CountPuzzleElements { get { return _countPuzzleElements;} }
+
+	public void SetPuzzleElements(int count)
+	{
+		_countPuzzleElements = count;
+	}
 
 	public List<MathOperator> GetPuzzleElements()
 	{
@@ -37,7 +44,7 @@ public class PuzzleModel : GameElement
 		switch (mode)
 		{
 				case Mode.Addition:
-				GenerateAddition(_countPuzzleElements, max);
+				GenerateAddition(_countPuzzleElements * _countPuzzleElements, max);
 				break;
 				case Mode.Deduction:
 				GenerateDeduction(_countPuzzleElements, max);

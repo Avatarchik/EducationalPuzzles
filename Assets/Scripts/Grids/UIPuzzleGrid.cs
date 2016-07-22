@@ -12,10 +12,11 @@ public class UIPuzzleGrid : UGUIAbstractGrid<UIPuzzleGridViewModel>
 		return Prefab;
 	}
 
-	void Start()
+	public void SetCellSize(int countWidth)
 	{
-		int sizeCell = Screen.width/3;
-		GetComponent<GridLayoutGroup>().cellSize = new Vector2(sizeCell,sizeCell);
+		int sizeCell = Screen.width / countWidth;
+		GetComponent<GridLayoutGroup>().cellSize = new Vector2(sizeCell, sizeCell);
+		GetComponent<GridLayoutGroup>().constraintCount = countWidth;
 	}
 }
 

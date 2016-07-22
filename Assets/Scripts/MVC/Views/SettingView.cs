@@ -9,6 +9,7 @@ public class SettingView : GameElement
 {
 	public Dropdown DropdownOperator;
 	public Dropdown DropdownMax;
+	public Dropdown DropdownMaxElements;
 
 	public Button ButtonPlay;
 	public Button ButtonBack;
@@ -19,9 +20,11 @@ public class SettingView : GameElement
 	{
 		DropdownOperator.onValueChanged.AddListener(OnChangeOperator);
 		DropdownMax.onValueChanged.AddListener(OnChangeMax);
+		DropdownMaxElements.onValueChanged.AddListener(OnChangeMaxElements);
 
 		DropdownOperator.value = 0;
 		DropdownMax.value = 0;
+		DropdownMaxElements.value = 0;
 
 		ButtonPlay.onClick.AddListener(SettingAccept);
 		ButtonBack.onClick.AddListener(delegate { SceneManager.LoadScene("MenuScene");});
@@ -31,6 +34,19 @@ public class SettingView : GameElement
 	{
 		//проверка на ведённые данные
 		OnSettingAccept();
+	}
+
+	private void OnChangeMaxElements(int index)
+	{
+		switch (index)
+		{
+			case 0:
+				app.Model.PuzzleModel.SetPuzzleElements(3);
+				break;
+			case 1:
+				app.Model.PuzzleModel.SetPuzzleElements(4);
+				break;
+		}
 	}
 
 	private void OnChangeMax(int index)
