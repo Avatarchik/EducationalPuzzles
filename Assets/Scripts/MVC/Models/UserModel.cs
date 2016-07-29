@@ -4,15 +4,29 @@ using System.Collections;
 
 public class UserModel : GameElement
 {
-
-	private Mode _currMode;
+	private ModeOperation _currModeOperation;
+	private ModeGame _currModeGame;
 	private int _max;
+	private int _countPuzzleElements;
 
 	public Action OnCangeMode = delegate { };
+	public Action OnAddValueRecord = delegate { };
 
-	public void SetMode(Mode mode)
+	public int CountPuzzleElements { get { return _countPuzzleElements; } }
+
+	public void SetPuzzleElements(int count)
 	{
-		_currMode = mode;
+		_countPuzzleElements = count;
+	}
+
+	public void SetModeGame(ModeGame mode)
+	{
+		_currModeGame = mode;
+	}
+
+	public void SetModeOperation(ModeOperation mode)
+	{
+		_currModeOperation = mode;
 
 		OnCangeMode();
 	}
@@ -22,9 +36,14 @@ public class UserModel : GameElement
 		_max = max;
 	}
 
-	public Mode GetMode()
+	public ModeOperation GetModeOperation()
 	{
-		return _currMode;
+		return _currModeOperation;
+	}
+
+	public ModeGame GetModeGame()
+	{
+		return _currModeGame;
 	}
 
 	public int GetMax()
@@ -33,10 +52,16 @@ public class UserModel : GameElement
 	}
 }
 
-public enum Mode
+public enum ModeOperation
 {
 	Addition,
 	Deduction,
 	Division,
 	Multiplication
+}
+
+public enum ModeGame
+{
+	Normal,
+	Record
 }

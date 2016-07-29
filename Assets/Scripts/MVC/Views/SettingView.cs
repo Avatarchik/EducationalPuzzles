@@ -10,6 +10,7 @@ public class SettingView : GameElement
 	public Dropdown DropdownOperator;
 	public Dropdown DropdownMax;
 	public Dropdown DropdownMaxElements;
+	public Dropdown DropdownModeGame;
 
 	public Button ButtonPlay;
 	public Button ButtonBack;
@@ -21,13 +22,28 @@ public class SettingView : GameElement
 		DropdownOperator.onValueChanged.AddListener(OnChangeOperator);
 		DropdownMax.onValueChanged.AddListener(OnChangeMax);
 		DropdownMaxElements.onValueChanged.AddListener(OnChangeMaxElements);
+		DropdownModeGame.onValueChanged.AddListener(OnChangeModeGame);
 
 		DropdownOperator.value = 0;
 		DropdownMax.value = 0;
 		DropdownMaxElements.value = 0;
+		DropdownModeGame.value = 0;
 
 		ButtonPlay.onClick.AddListener(SettingAccept);
 		ButtonBack.onClick.AddListener(delegate { SceneManager.LoadScene("MenuScene");});
+	}
+
+	private void OnChangeModeGame(int index)
+	{
+		switch (index)
+		{
+			case 0:
+				app.Model.UserModel.SetModeGame(ModeGame.Normal);
+				break;
+			case 1:
+				app.Model.UserModel.SetModeGame(ModeGame.Record);
+				break;
+		}
 	}
 
 	private void SettingAccept()
@@ -41,10 +57,10 @@ public class SettingView : GameElement
 		switch (index)
 		{
 			case 0:
-				app.Model.PuzzleModel.SetPuzzleElements(3);
+				app.Model.UserModel.SetPuzzleElements(3);
 				break;
 			case 1:
-				app.Model.PuzzleModel.SetPuzzleElements(4);
+				app.Model.UserModel.SetPuzzleElements(4);
 				break;
 		}
 	}
@@ -76,16 +92,16 @@ public class SettingView : GameElement
 		switch (index)
 		{
 			case 0:
-				app.Model.UserModel.SetMode(Mode.Addition);
+				app.Model.UserModel.SetModeOperation(ModeOperation.Addition);
 				break;
 			case 1:
-				app.Model.UserModel.SetMode(Mode.Deduction);
+				app.Model.UserModel.SetModeOperation(ModeOperation.Deduction);
 				break;
 			case 2:
-				app.Model.UserModel.SetMode(Mode.Multiplication);
+				app.Model.UserModel.SetModeOperation(ModeOperation.Multiplication);
 				break;
 			case 3:
-				app.Model.UserModel.SetMode(Mode.Division);
+				app.Model.UserModel.SetModeOperation(ModeOperation.Division);
 				break;
 		}
 	}

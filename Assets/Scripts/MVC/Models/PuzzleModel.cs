@@ -8,16 +8,10 @@ public class PuzzleModel : GameElement
 {
 
 	private List<MathOperator> _puzzleElements = new List<MathOperator>();
-	private int _countPuzzleElements;
+	
 
 	public Action OnGeneratePuzzleElements = delegate { };
-
-	public int CountPuzzleElements { get { return _countPuzzleElements;} }
-
-	public void SetPuzzleElements(int count)
-	{
-		_countPuzzleElements = count;
-	}
+	public Action<MathOperator> OnGeneratePuzzleElement = delegate {};
 
 	public List<MathOperator> GetPuzzleElements()
 	{
@@ -38,22 +32,46 @@ public class PuzzleModel : GameElement
 		_puzzleElements.Remove(mathOperator);
 	}
 
-	public void GenerateInts(Mode mode, int max)
+	public void GenerateInt(ModeOperation mode, int max)
 	{
-
 		switch (mode)
 		{
-				case Mode.Addition:
-				GenerateAddition(_countPuzzleElements * _countPuzzleElements, max);
+			case ModeOperation.Addition:
+				GenerateAddition(1, max);
 				break;
-				case Mode.Deduction:
-				GenerateDeduction(_countPuzzleElements, max);
+			case ModeOperation.Deduction:
+				GenerateDeduction(1, max);
 				break;
-				case Mode.Multiplication:
-				GenerateMultiplication(_countPuzzleElements, max);
+			case ModeOperation.Multiplication:
+				GenerateMultiplication(1, max);
 				break;
-				case Mode.Division:
-				GenerateDivision(_countPuzzleElements, max);
+			case ModeOperation.Division:
+				GenerateDivision(1, max);
+				break;
+
+			default:
+				throw new ArgumentOutOfRangeException("mode", mode, null);
+		}
+	}
+
+	public void GenerateInts(ModeOperation mode, int max, int countElements)
+	{
+		_puzzleElements.Clear();
+
+		int elements = (int) Math.Pow(countElements, 2);
+		switch (mode)
+		{
+			case ModeOperation.Addition:
+				GenerateAddition(elements, max);
+				break;
+			case ModeOperation.Deduction:
+				GenerateDeduction(elements, max);
+				break;
+			case ModeOperation.Multiplication:
+				GenerateMultiplication(elements, max);
+				break;
+			case ModeOperation.Division:
+				GenerateDivision(elements, max);
 				break;
 
 			default:
@@ -63,16 +81,22 @@ public class PuzzleModel : GameElement
 
 	private void GenerateAddition(int count, int max)
 	{
-		_puzzleElements.Clear();
 
 		Random rnd = new Random();
+		MathOperator currOperator = null;
 
 		for (int i = 0; i < count; i++)
 		{
 			var a = rnd.Next(max);
 			var b = rnd.Next(max);
-			var test = new Addition(a,b);
-			_puzzleElements.Add(test);
+			currOperator = new Addition(a,b);
+			_puzzleElements.Add(currOperator);
+		}
+
+		if (count == 1)
+		{
+			OnGeneratePuzzleElement(currOperator);
+			return;
 		}
 
 		OnGeneratePuzzleElements();
@@ -80,16 +104,22 @@ public class PuzzleModel : GameElement
 
 	private void GenerateDeduction(int count, int max)
 	{
-		_puzzleElements.Clear();
 
 		Random rnd = new Random();
+		MathOperator currOperator = null;
 
 		for (int i = 0; i < count; i++)
 		{
 			var a = rnd.Next(max);
 			var b = rnd.Next(max);
-			var test = new Deduction(a, b);
-			_puzzleElements.Add(test);
+			currOperator = new Deduction(a, b);
+			_puzzleElements.Add(currOperator);
+		}
+
+		if (count == 1)
+		{
+			OnGeneratePuzzleElement(currOperator);
+			return;
 		}
 
 		OnGeneratePuzzleElements();
@@ -97,16 +127,22 @@ public class PuzzleModel : GameElement
 
 	private void GenerateMultiplication(int count, int max)
 	{
-		_puzzleElements.Clear();
 
 		Random rnd = new Random();
+		MathOperator currOperator = null;
 
 		for (int i = 0; i < count; i++)
 		{
 			var a = rnd.Next(max);
 			var b = rnd.Next(max);
-			var test = new Multiplication(a, b);
-			_puzzleElements.Add(test);
+			currOperator = new Multiplication(a, b);
+			_puzzleElements.Add(currOperator);
+		}
+
+		if (count == 1)
+		{
+			OnGeneratePuzzleElement(currOperator);
+			return;
 		}
 
 		OnGeneratePuzzleElements();
@@ -114,9 +150,9 @@ public class PuzzleModel : GameElement
 
 	private void GenerateDivision(int count, int max)
 	{
-		_puzzleElements.Clear();
 
 		Random rnd = new Random();
+		MathOperator currOperator = null;
 
 		for (int i = 0; i < count; i++)
 		{
@@ -128,9 +164,15 @@ public class PuzzleModel : GameElement
 				continue;
 			}
 
-			var test = new Division(a, b);
+			currOperator = new Division(a, b);
 
-			_puzzleElements.Add(test);
+			_puzzleElements.Add(currOperator);
+		}
+
+		if (count == 1)
+		{
+			OnGeneratePuzzleElement(currOperator);
+			return;
 		}
 
 		OnGeneratePuzzleElements();

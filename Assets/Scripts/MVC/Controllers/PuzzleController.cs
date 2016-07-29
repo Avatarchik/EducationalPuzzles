@@ -13,8 +13,15 @@ public class PuzzleController : GameElement {
 
 	public void GenerateInts()
 	{
-		Mode currMode = app.Model.UserModel.GetMode();
+		ModeOperation currMode = app.Model.UserModel.GetModeOperation();
 		int max = app.Model.UserModel.GetMax();
-		app.Model.PuzzleModel.GenerateInts(currMode, max);
+		app.Model.PuzzleModel.GenerateInts(currMode, max,app.Model.UserModel.CountPuzzleElements);
+	}
+
+	public void GenerateInt()
+	{
+		ModeOperation currMode = app.Model.UserModel.GetModeOperation();
+		int max = app.Model.UserModel.GetMax();
+		app.Model.PuzzleModel.GenerateInt(currMode, max);
 	}
 }

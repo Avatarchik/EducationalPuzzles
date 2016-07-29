@@ -7,14 +7,16 @@ public class UIPuzzleAnserGrid : UGUIAbstractGrid<UIPuzzleGridViewModel>
 
 	public UIPuzzleAnserGridElement Prefab;
 
+	public RectTransform Rect;
+
 	public override UGUIAbstractGridElement<UIPuzzleGridViewModel> GetPrefab(UIPuzzleGridViewModel data)
 	{
 		return Prefab;
 	}
 
-	void Start()
+	public void SetCellSize(int countWidth)
 	{
-		int sizeCell = Screen.width / 3;
+		int sizeCell = (int)(Rect.rect.width / countWidth);
 		GetComponent<GridLayoutGroup>().cellSize = new Vector2(sizeCell, sizeCell);
 	}
 }
