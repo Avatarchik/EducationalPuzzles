@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public abstract class MathOperator
+﻿public abstract class MathOperator
 {
 
 	protected int a;

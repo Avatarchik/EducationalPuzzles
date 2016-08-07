@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -9,6 +8,7 @@ public class UIDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 	public static GameObject ItemBeingDragged;
 	private Vector2 _startPosition;
 	public GridLayoutGroup GridLayoutGroup;
+	public CanvasGroup CanvasGroup;
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
@@ -19,13 +19,13 @@ public class UIDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
 	public void OnDrag(PointerEventData eventData)
 	{
-		GetComponent<CanvasGroup>().blocksRaycasts = false;
+		CanvasGroup.blocksRaycasts = false;
 		transform.position = Input.mousePosition;
 	}
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
-		GetComponent<CanvasGroup>().blocksRaycasts = true;
+		CanvasGroup.blocksRaycasts = true;
 		GridLayoutGroup.enabled = true;
 		transform.position = _startPosition;
 	}

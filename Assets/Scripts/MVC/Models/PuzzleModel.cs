@@ -1,17 +1,64 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using Random = System.Random;
 
 public class PuzzleModel : GameElement
 {
+	private ModeOperation _currModeOperation;
+	private ModeGame _currModeGame;
+	private int _max;
+	private int _countPuzzleElements;
 
+	public List<Sprite> AllBack; 
 	private List<MathOperator> _puzzleElements = new List<MathOperator>();
-	
 
-	public Action OnGeneratePuzzleElements = delegate { };
-	public Action<MathOperator> OnGeneratePuzzleElement = delegate {};
+	public event Action OnGeneratePuzzleElements = delegate { };
+	public event Action<MathOperator> OnGeneratePuzzleElement = delegate { };
+	public event Action OnCangeMode = delegate { };
+	public event Action OnAppledTip = delegate { };
+
+	public int CountPuzzleElements { get { return _countPuzzleElements; } }
+
+	public void AppledTip()
+	{
+		//обработка если что-то сделать ещё
+		OnAppledTip();
+	}
+
+	public void SetPuzzleElements(int count)
+	{
+		_countPuzzleElements = count;
+	}
+
+	public void SetModeGame(ModeGame mode)
+	{
+		_currModeGame = mode;
+	}
+
+	public void SetModeOperation(ModeOperation mode)
+	{
+		_currModeOperation = mode;
+
+		OnCangeMode();
+	}
+
+	public void SetMax(int max)
+	{
+		_max = max;
+	}
+
+	public ModeGame GetModeGame()
+	{
+		return _currModeGame;
+	}
+
+	public Sprite GetRandomBack()
+	{
+		Random rnd = new Random();
+		int index = rnd.Next(0, AllBack.Count);
+		return AllBack[index];
+	}
 
 	public List<MathOperator> GetPuzzleElements()
 	{
@@ -32,50 +79,50 @@ public class PuzzleModel : GameElement
 		_puzzleElements.Remove(mathOperator);
 	}
 
-	public void GenerateInt(ModeOperation mode, int max)
+	public void GenerateInt()
 	{
-		switch (mode)
+		switch (_currModeOperation)
 		{
 			case ModeOperation.Addition:
-				GenerateAddition(1, max);
+				GenerateAddition(1, _max);
 				break;
 			case ModeOperation.Deduction:
-				GenerateDeduction(1, max);
+				GenerateDeduction(1, _max);
 				break;
 			case ModeOperation.Multiplication:
-				GenerateMultiplication(1, max);
+				GenerateMultiplication(1, _max);
 				break;
 			case ModeOperation.Division:
-				GenerateDivision(1, max);
+				GenerateDivision(1, _max);
 				break;
 
 			default:
-				throw new ArgumentOutOfRangeException("mode", mode, null);
+				throw new ArgumentOutOfRangeException("mode", _currModeOperation, null);
 		}
 	}
 
-	public void GenerateInts(ModeOperation mode, int max, int countElements)
+	public void GenerateInts()
 	{
 		_puzzleElements.Clear();
 
-		int elements = (int) Math.Pow(countElements, 2);
-		switch (mode)
+		int elements = (int) Math.Pow(CountPuzzleElements, 2);
+		switch (_currModeOperation)
 		{
 			case ModeOperation.Addition:
-				GenerateAddition(elements, max);
+				GenerateAddition(elements, _max);
 				break;
 			case ModeOperation.Deduction:
-				GenerateDeduction(elements, max);
+				GenerateDeduction(elements, _max);
 				break;
 			case ModeOperation.Multiplication:
-				GenerateMultiplication(elements, max);
+				GenerateMultiplication(elements, _max);
 				break;
 			case ModeOperation.Division:
-				GenerateDivision(elements, max);
+				GenerateDivision(elements, _max);
 				break;
 
 			default:
-				throw new ArgumentOutOfRangeException("mode", mode, null);
+				throw new ArgumentOutOfRangeException("mode", _currModeOperation, null);
 		}
 	}
 
@@ -177,4 +224,18 @@ public class PuzzleModel : GameElement
 
 		OnGeneratePuzzleElements();
 	}
+}
+
+public enum ModeOperation
+{
+	Addition,
+	Deduction,
+	Division,
+	Multiplication
+}
+
+public enum ModeGame
+{
+	Normal,
+	Record
 }

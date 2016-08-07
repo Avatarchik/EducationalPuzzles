@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Multiplication : MathOperator {
+﻿public class Multiplication : MathOperator {
 
 	public Multiplication(int a, int b)
 	{

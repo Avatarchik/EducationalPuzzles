@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class UIPuzzleGrid : UGUIAbstractGrid<UIPuzzleGridViewModel>
 {
 
 	public UIPuzzleGridElement Prefab;
-
 	public RectTransform Rect;
+	public GridLayoutGroup GridLayoutGroup;
 
 	public override UGUIAbstractGridElement<UIPuzzleGridViewModel> GetPrefab(UIPuzzleGridViewModel data)
 	{
@@ -17,8 +16,8 @@ public class UIPuzzleGrid : UGUIAbstractGrid<UIPuzzleGridViewModel>
 	public void SetCellSize(int countWidth)
 	{
 		int sizeCell = (int) (Rect.rect.width / countWidth);
-		GetComponent<GridLayoutGroup>().cellSize = new Vector2(sizeCell, sizeCell);
-		GetComponent<GridLayoutGroup>().constraintCount = countWidth;
+		GridLayoutGroup.cellSize = new Vector2(sizeCell, sizeCell);
+		GridLayoutGroup.constraintCount = countWidth;
 	}
 
 	public UIPuzzleGridElement InitializeElement(UIPuzzleGridViewModel viewModel, int indexChild)
@@ -26,7 +25,18 @@ public class UIPuzzleGrid : UGUIAbstractGrid<UIPuzzleGridViewModel>
 		var element = base.NewElementInstance(Prefab);
 		base.InitializeElement(element,viewModel);
 		element.transform.SetSiblingIndex(indexChild);
+		gridElements.Add(element);
 		return element as UIPuzzleGridElement;
+	}
+
+	public void DeleteElement(UIPuzzleGridElement element)
+	{
+		gridElements.Remove(element);
+	}
+
+	public void EnableLayout()
+	{
+		GridLayoutGroup.enabled = false;
 	}
 }
 

@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Addition : MathOperator{
+﻿public class Addition : MathOperator{
 
 	public Addition(int a, int b)
 	{

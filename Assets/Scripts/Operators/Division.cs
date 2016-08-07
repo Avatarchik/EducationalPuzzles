@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Division : MathOperator {
+﻿public class Division : MathOperator {
 
 	public Division(int a, int b)
 	{

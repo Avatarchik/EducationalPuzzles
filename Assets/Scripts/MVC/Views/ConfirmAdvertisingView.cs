@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
@@ -31,7 +30,7 @@ public class ConfirmAdvertisingView : GameElement
 			case ShowResult.Finished:
 				Debug.Log("The ad was successfully shown.");
 				//
-				gameObject.SetActive(false);
+				app.Model.PuzzleModel.AppledTip();
 				// YOUR CODE TO REWARD THE GAMER
 				// Give coins etc.
 				break;

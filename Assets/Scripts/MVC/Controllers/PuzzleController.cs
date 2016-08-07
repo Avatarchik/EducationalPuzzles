@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class PuzzleController : GameElement {
+﻿public class PuzzleController : GameElement {
 
 	public void DeleteElement(MathOperator mathOperator)
 	{
@@ -9,19 +6,5 @@ public class PuzzleController : GameElement {
 		{
 			app.Model.PuzzleModel.DeleteElement(mathOperator);
 		}
-	}
-
-	public void GenerateInts()
-	{
-		ModeOperation currMode = app.Model.UserModel.GetModeOperation();
-		int max = app.Model.UserModel.GetMax();
-		app.Model.PuzzleModel.GenerateInts(currMode, max,app.Model.UserModel.CountPuzzleElements);
-	}
-
-	public void GenerateInt()
-	{
-		ModeOperation currMode = app.Model.UserModel.GetModeOperation();
-		int max = app.Model.UserModel.GetMax();
-		app.Model.PuzzleModel.GenerateInt(currMode, max);
 	}
 }

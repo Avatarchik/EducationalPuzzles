@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Deduction : MathOperator {
+﻿public class Deduction : MathOperator {
 
 	public Deduction(int a, int b)
 	{

@@ -1,7 +1,4 @@
 ﻿using System;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -15,7 +12,7 @@ public class SettingView : GameElement
 	public Button ButtonPlay;
 	public Button ButtonBack;
 
-	public Action OnSettingAccept;
+	public event Action OnSettingAccept;
 
 	void Start()
 	{
@@ -38,10 +35,10 @@ public class SettingView : GameElement
 		switch (index)
 		{
 			case 0:
-				app.Model.UserModel.SetModeGame(ModeGame.Normal);
+				app.Model.PuzzleModel.SetModeGame(ModeGame.Normal);
 				break;
 			case 1:
-				app.Model.UserModel.SetModeGame(ModeGame.Record);
+				app.Model.PuzzleModel.SetModeGame(ModeGame.Record);
 				break;
 		}
 	}
@@ -57,10 +54,10 @@ public class SettingView : GameElement
 		switch (index)
 		{
 			case 0:
-				app.Model.UserModel.SetPuzzleElements(3);
+				app.Model.PuzzleModel.SetPuzzleElements(3);
 				break;
 			case 1:
-				app.Model.UserModel.SetPuzzleElements(4);
+				app.Model.PuzzleModel.SetPuzzleElements(4);
 				break;
 		}
 	}
@@ -70,19 +67,19 @@ public class SettingView : GameElement
 		switch (index)
 		{
 			case 0:
-				app.Model.UserModel.SetMax(10);
+				app.Model.PuzzleModel.SetMax(10);
 				break;
 			case 1:
-				app.Model.UserModel.SetMax(20);
+				app.Model.PuzzleModel.SetMax(20);
 				break;
 			case 2:
-				app.Model.UserModel.SetMax(30);
+				app.Model.PuzzleModel.SetMax(30);
 				break;
 			case 3:
-				app.Model.UserModel.SetMax(40);
+				app.Model.PuzzleModel.SetMax(40);
 				break;
 			case 4:
-				app.Model.UserModel.SetMax(50);
+				app.Model.PuzzleModel.SetMax(50);
 				break;
 		}
 	}
@@ -92,16 +89,16 @@ public class SettingView : GameElement
 		switch (index)
 		{
 			case 0:
-				app.Model.UserModel.SetModeOperation(ModeOperation.Addition);
+				app.Model.PuzzleModel.SetModeOperation(ModeOperation.Addition);
 				break;
 			case 1:
-				app.Model.UserModel.SetModeOperation(ModeOperation.Deduction);
+				app.Model.PuzzleModel.SetModeOperation(ModeOperation.Deduction);
 				break;
 			case 2:
-				app.Model.UserModel.SetModeOperation(ModeOperation.Multiplication);
+				app.Model.PuzzleModel.SetModeOperation(ModeOperation.Multiplication);
 				break;
 			case 3:
-				app.Model.UserModel.SetModeOperation(ModeOperation.Division);
+				app.Model.PuzzleModel.SetModeOperation(ModeOperation.Division);
 				break;
 		}
 	}
