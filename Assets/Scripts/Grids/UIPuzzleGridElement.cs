@@ -11,7 +11,7 @@ public class UIPuzzleGridElement : UGUIAbstractGridElement<UIPuzzleGridViewModel
 	public CanvasGroup CanvasGroup;
 
 	private Color _startColor;////временные меры надо убрать этот говнокод
-
+	private Tween _tween;
 	public override void Initialize(UIPuzzleGridViewModel data)
 	{
 		Anser.text = data.MathOperator.Result.ToString();
@@ -20,6 +20,8 @@ public class UIPuzzleGridElement : UGUIAbstractGridElement<UIPuzzleGridViewModel
 
 	public void ChangeViewTrueAnser()
 	{
+		
+
 		LayoutElement.ignoreLayout = true;
 
 		Image.color = Color.green;
@@ -30,8 +32,10 @@ public class UIPuzzleGridElement : UGUIAbstractGridElement<UIPuzzleGridViewModel
 
 	public void ChangeViewFalseAnser()
 	{
+		_tween.Kill();
+
 		Image.color = Color.red;
-		DOTween.To(() => Image.color, x => Image.color = x, _startColor, 1f);
+		_tween = DOTween.To(() => Image.color, x => Image.color = x, _startColor, 1f);
 	}
 
 	private void OnComplite()

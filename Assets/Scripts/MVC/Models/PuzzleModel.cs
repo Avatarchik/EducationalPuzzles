@@ -99,6 +99,8 @@ public class PuzzleModel : GameElement
 			default:
 				throw new ArgumentOutOfRangeException("mode", _currModeOperation, null);
 		}
+
+//		OnGeneratePuzzleElement(currOperator);
 	}
 
 	public void GenerateInts()
@@ -124,17 +126,26 @@ public class PuzzleModel : GameElement
 			default:
 				throw new ArgumentOutOfRangeException("mode", _currModeOperation, null);
 		}
+
+		OnGeneratePuzzleElements();
+	}
+
+	private T CreateObject<T>(Func<int, int, T> creator, int a, int b) where T : MathOperator
+	{
+		return creator(a,b); //можно обойтись и без этого, но стоит запомнить
 	}
 
 	private void GenerateAddition(int count, int max)
 	{
+		var test = CreateObject((i, i1) => new Multiplication(i, i1), 4, 5); //передавать в конструктор _max
+		Debug.Log(test.Result);
 
 		Random rnd = new Random();
 		MathOperator currOperator = null;
 
 		for (int i = 0; i < count; i++)
 		{
-			var a = rnd.Next(max);
+			var a = rnd.Next(max); //выбор этих переменных перенести в операторы
 			var b = rnd.Next(max);
 			currOperator = new Addition(a,b);
 			_puzzleElements.Add(currOperator);
@@ -142,11 +153,8 @@ public class PuzzleModel : GameElement
 
 		if (count == 1)
 		{
-			OnGeneratePuzzleElement(currOperator);
-			return;
+			OnGeneratePuzzleElement(currOperator);//как-то перенести в метод создания одного элемента
 		}
-
-		OnGeneratePuzzleElements();
 	}
 
 	private void GenerateDeduction(int count, int max)
@@ -166,10 +174,7 @@ public class PuzzleModel : GameElement
 		if (count == 1)
 		{
 			OnGeneratePuzzleElement(currOperator);
-			return;
 		}
-
-		OnGeneratePuzzleElements();
 	}
 
 	private void GenerateMultiplication(int count, int max)
@@ -189,10 +194,7 @@ public class PuzzleModel : GameElement
 		if (count == 1)
 		{
 			OnGeneratePuzzleElement(currOperator);
-			return;
 		}
-
-		OnGeneratePuzzleElements();
 	}
 
 	private void GenerateDivision(int count, int max)
@@ -219,10 +221,7 @@ public class PuzzleModel : GameElement
 		if (count == 1)
 		{
 			OnGeneratePuzzleElement(currOperator);
-			return;
 		}
-
-		OnGeneratePuzzleElements();
 	}
 }
 

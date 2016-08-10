@@ -25,7 +25,14 @@ public class PuzzleView : GameElement
 	private int _record;
 
 	private int _indexChild;
-	private List<UIPuzzleGridElement> _tipElements = new List<UIPuzzleGridElement>(); 
+	private List<UIPuzzleGridElement> _tipElements = new List<UIPuzzleGridElement>();
+
+	public Text ErrorText;
+	public int Errors;
+	private int _countError;
+
+	public RectTransform TutorPanel;
+	public Button CloseTutor;//перенести
 
 	void Start () 
 	{
@@ -46,6 +53,10 @@ public class PuzzleView : GameElement
 		{
 			RecordText.gameObject.SetActive(false);
 		}
+
+		ErrorText.text = Errors.ToString();
+		TutorPanel.gameObject.SetActive(false);
+		CloseTutor.onClick.AddListener(delegate {TutorPanel.gameObject.SetActive(false);});
 	}
 
 	private void OnAppledTip()
@@ -85,6 +96,8 @@ public class PuzzleView : GameElement
 	private void OnSelectElement(UGUIAbstractGridElement<UIPuzzleGridViewModel> element)
 	{
 		Debug.Log(element.GetData().MathOperator.Result);
+		TutorPanel.gameObject.SetActive(true);
+		PuzzleGrid.OnSelectElement -= OnSelectElement;
 	}
 
 	private void OnGenerateElements()
@@ -130,6 +143,13 @@ public class PuzzleView : GameElement
 		if (!currElement.GetData().MathOperator.Result.ToString().Equals(currTemp.GetData().MathOperator.Result.ToString()))
 		{
 			currElement.ChangeViewFalseAnser();
+			_countError++;
+			ErrorText.text = (Errors - _countError).ToString();
+			if (_countError >= Errors)
+			{
+				PuzzleAnserGrid.gameObject.SetActive(false);
+				OnPuzzleCollect();
+			}
 			return;
 		}
 
